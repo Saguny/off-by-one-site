@@ -1,5 +1,6 @@
 
 /* I have no fucking idea what this shit does anymore do not fucking touch it*/
+/* no lemme rephrase that, i dont fucking know how this works anymore */
 
 (function () {
   var INTRO_END = 5.55;
