@@ -1,3 +1,6 @@
+
+/* I have no fucking idea what this shit does anymore do not fucking touch it*/
+
 (function () {
   var INTRO_END = 5.55;
   var INK = '#121212', PAPER = '#f4f4f2', ACID = '#b4ff1f', BLUE = '#2b0bff', MAG = '#ff2bd6', DIM = '#6a6a66';
