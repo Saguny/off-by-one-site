@@ -44,7 +44,6 @@
     dataAt = now;
   }).catch(function () {});
 
-  /* ── Intro ─────────────────────────────────────── */
 
   var ic = document.getElementById('intro');
   var ix = ic.getContext('2d');
@@ -572,7 +571,6 @@
   }
 
 
-  /* ── Page boot ─────────────────────────────────── */
 
   var BOOT_FROM = INTRO_END - .6;
   var boots = Array.prototype.map.call(document.querySelectorAll('.boot'), function (el) {
@@ -653,7 +651,6 @@
   }
 
 
-  /* ── Ambient ───────────────────────────────────── */
 
   var clock = document.getElementById('clock');
   var gens = document.querySelectorAll('[data-gen]');
@@ -851,7 +848,6 @@
     if (e.persisted && exit) { exit = null; ic.style.display = 'none'; }
   });
 
-  /* ── Clock ─────────────────────────────────────── */
 
   function rectOf(el) { return el ? el.getBoundingClientRect() : null; }
 
