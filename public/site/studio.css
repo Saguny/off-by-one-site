@@ -115,6 +115,7 @@ h3 { margin: 0; font-size: clamp(22px, 2.1vw, 36px); line-height: 1.15; letter-s
 .p-read > div { padding: 12px 14px; border-right: 1px solid var(--line); min-width: 0; }
 .p-read > div:last-child { border-right: 0; }
 .p-read b { font-size: clamp(20px, 1.9vw, 30px); }
+.p-read-fit { grid-template-columns: auto auto 1fr; }
 .p-wave { position: relative; min-height: 64px; }
 .p-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
 .src { font-size: 12px; letter-spacing: .14em; color: var(--mute); transition: color .12s; }
@@ -193,6 +194,8 @@ h3, .sec-head h2 { font-weight: 700; letter-spacing: -.01em; }
   .hide-sm, .glyphs, .sec-meta { display: none; }
   .btn { flex: 1 1 100%; }
   .p-read { grid-template-columns: 1fr 1fr; }
+  .p-read-fit { grid-template-columns: auto 1fr; }
+  .p-read-fit b { font-size: clamp(14px, 4.7vw, 20px); }
   .p-read > div:nth-child(2) { border-right: 0; }
   .p-read > .p-wave { grid-column: 1 / -1; border-top: 1px solid var(--line); }
   .c-panel { grid-template-columns: 1fr; }
