@@ -463,7 +463,7 @@
       itext('■□□', cx, ih - 30 * s, Math.round(16 * s), '#ffffff', null, 'center');
       chromeShape(2, iw * .66, ih * .55, 110 * s, 1.0);
 
-      var LINES = ['> boot(crew[0])', 'OK', '> boot(crew[1])', 'OK', '> exit 0', 'None', 'END', 'CREW 2/2', 'const', 'i < crew.length'];
+      var LINES = ['> boot(crew[0])', 'OK', '> boot(crew[1])', 'OK', '> boot(crew[2])', 'OK', '> exit 0', 'None', 'END', 'CREW 3/3', 'const', 'i < crew.length'];
       for (var g = 0; g < 44; g++) {
         var tg = 2.82 + 1.0 * Math.pow(g / 44, .55);
         if (tq < tg) break;
@@ -813,8 +813,9 @@
 
 
   function drawIdenticons() {
+    var seeds = [17, 41, 73];
     document.querySelectorAll('canvas.avatar').forEach(function (cv, n) {
-      var seed = n % 2 ? 41 : 17, S = 8;
+      var seed = seeds[n % 3], S = 8;
       cv.width = S; cv.height = S;
       var x = cv.getContext('2d');
       x.fillStyle = INK;
