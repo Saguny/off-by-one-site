@@ -1,20 +1,28 @@
-.bio-hero { padding: clamp(32px, 4vw, 64px) clamp(24px, 4vw, 72px); display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 24px clamp(32px, 4vw, 56px); align-items: start; }
+.bio-hero { padding: clamp(32px, 4vw, 64px) clamp(24px, 4vw, 72px); display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(240px, 320px); gap: 24px clamp(32px, 4vw, 56px); align-items: start; }
 .bio-avatar { width: clamp(140px, 14vw, 220px); aspect-ratio: 1; object-fit: cover; border: 2px solid var(--line); background: var(--tile); display: block; }
 .bio-body { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
 .bio-body h3 { margin: 0; }
 .bio-role { margin: 0; color: var(--mute); letter-spacing: .12em; font-size: 13px; }
 .bio-text { margin: 0; color: var(--mute); line-height: 1.65; max-width: 64ch; }
-.bio-links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 4px; }
-.bio-links .src { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; background: none; font-family: inherit; }
-.link-icon { width: 14px; height: 14px; flex: none; }
 .bio-link { color: var(--green); text-decoration: underline; text-underline-offset: 3px; }
 .bio-link:hover { color: var(--text); }
 .bio-sign { color: var(--text); margin-top: 4px; }
-.bio-spec { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 12px; align-items: center; }
-.bio-spec:first-of-type { margin-top: 8px; }
+.bio-side { display: flex; flex-direction: column; gap: 28px; min-width: 0; padding-left: clamp(24px, 3vw, 40px); border-left: 2px solid var(--line); }
+.bio-spec { display: flex; flex-direction: column; gap: 10px; }
+.bio-links { display: flex; flex-direction: column; gap: 8px; }
+.bio-links .src { display: flex; align-items: center; gap: 10px; align-self: stretch; cursor: pointer; font-family: inherit; font-size: 12px; text-align: left; }
+button.src { background: transparent; }
+.link-icon { width: 14px; height: 14px; flex: none; }
 .bio-barcode { grid-column: 1 / -1; width: 100%; height: 36px; display: block; }
 .back-link { font-size: 12px; letter-spacing: .14em; color: var(--mute); transition: color .12s; display: inline-block; margin-bottom: 8px; }
 .back-link:hover { color: var(--green); }
+@media (max-width: 1100px) {
+  .bio-hero { grid-template-columns: auto minmax(0, 1fr); }
+  .bio-side { grid-column: 2; border-left: 0; padding-left: 0; padding-top: 24px; border-top: 2px solid var(--line); }
+  .bio-links { flex-direction: row; flex-wrap: wrap; }
+  .bio-links .src { align-self: auto; }
+}
 @media (max-width: 640px) {
   .bio-hero { grid-template-columns: 1fr; }
+  .bio-side { grid-column: 1; }
 }

@@ -75,6 +75,13 @@
       rg.addColorStop(0, '#3a3a3a'); rg.addColorStop(.45, '#ffffff'); rg.addColorStop(.7, '#9a9a9a'); rg.addColorStop(1, '#2a2a2a');
       g.strokeStyle = rg; g.lineWidth = 16;
       g.beginPath(); g.ellipse(128, 134, 116, 32, -.35, 0, Math.PI); g.stroke();
+    } else if (kind === 'cube') {
+      var Q = { t: [128, 30], ur: [214, 80], lr: [214, 178], b: [128, 228], ll: [42, 178], ul: [42, 80], c: [128, 130] };
+      [[['t', 'ur', 'c', 'ul'], '#e4e4e4'], [['ul', 'c', 'b', 'll'], '#7c7c7c'], [['c', 'ur', 'lr', 'b'], '#2e2e2e']].forEach(function (F) {
+        g.fillStyle = F[1];
+        g.beginPath(); F[0].forEach(function (k, i) { g[i ? 'lineTo' : 'moveTo'](Q[k][0], Q[k][1]); }); g.closePath(); g.fill();
+        g.strokeStyle = 'rgba(255,255,255,.35)'; g.lineWidth = 1.5; g.stroke();
+      });
     } else {
       var P = { t: [128, 18], b: [128, 238], l: [44, 122], r: [212, 130], f: [112, 156], k: [150, 100] };
       [['t', 'l', 'k', '#2e2e2e'], ['t', 'k', 'r', '#5a5a5a'], ['b', 'k', 'r', '#262626'], ['b', 'l', 'k', '#1c1c1c'],
@@ -97,7 +104,8 @@
     return c;
   }
 
-  var SUBJECTS = [{ img: bake(genObject('orb')) }, { img: bake(genObject('shard')) }];
+  var SUBJECTS = [{ img: bake(genObject('orb')) }, { img: bake(genObject('shard')) }, { img: bake(genObject('cube')) }];
+  var MISS = SUBJECTS.length;
 
 
   function fitIntro() {
@@ -383,9 +391,9 @@
       lineShape(0, iw * .6, ih * .66, 64 * s, INK);
       lineShape(3, iw * .2, ih * .7, 40 * s, INK);
 
-      var size = 140 * s, cxs = [cx - 170 * s, cx, cx + 170 * s], sy = cy - size / 2 + 20 * s;
-      var idx = tq >= .85 ? 2 : tq >= .7 ? 1 : tq >= .55 ? 0 : -1;
-      for (var k = 0; k < 2; k++) {
+      var size = 124 * s, cxs = [cx - 234 * s, cx - 78 * s, cx + 78 * s, cx + 234 * s], sy = cy - size / 2 + 20 * s;
+      var idx = tq >= .85 ? 3 : tq >= .76 ? 2 : tq >= .67 ? 1 : tq >= .58 ? 0 : -1;
+      for (var k = 0; k < MISS; k++) {
         var x0 = cxs[k] - size / 2;
         ix.fillStyle = PAPER; ix.fillRect(x0, sy, size, size);
         avatarBox(SUBJECTS[k], x0 + 8 * s, sy + 8 * s, size - 16 * s);
@@ -396,13 +404,13 @@
           itext('OK', x0 + size - 27 * s, sy + 5 * s, '700 ' + Math.round(15 * s), ACID, null, 'center');
         }
       }
-      if (idx === 2) {
-        var x2 = cxs[2] - size / 2;
+      if (idx === MISS) {
+        var x2 = cxs[MISS] - size / 2;
         if (tq < 1.0 && fstep % 2 === 0) { ix.fillStyle = '#ff2236'; ix.fillRect(x2, sy, size, size); }
         ix.setLineDash([10 * s, 8 * s]); ix.strokeStyle = '#ff2236'; ix.lineWidth = 4 * s;
         ix.strokeRect(x2, sy, size, size); ix.setLineDash([]);
-        itext('undefined', cxs[2], sy + size / 2 + 7 * s, '700 ' + Math.round(20 * s), INK, null, 'center');
-        itext('crew[2]', cxs[2], sy + size + 30 * s, Math.round(18 * s), '#ff2236', null, 'center');
+        itext('undefined', cxs[MISS], sy + size / 2 + 7 * s, '700 ' + Math.round(18 * s), INK, null, 'center');
+        itext('crew[' + MISS + ']', cxs[MISS], sy + size + 30 * s, Math.round(18 * s), '#ff2236', null, 'center');
       }
       if (idx >= 0) {
         var px = cxs[idx];
@@ -410,7 +418,7 @@
         ix.beginPath(); ix.moveTo(px - 14 * s, sy - 34 * s); ix.lineTo(px + 14 * s, sy - 34 * s); ix.lineTo(px, sy - 14 * s); ix.closePath(); ix.fill();
         itext('i = ' + idx, px, sy - 46 * s, '700 ' + Math.round(22 * s), INK, null, 'center');
       }
-      build(tq, { t0: .93, t1: 1.46, n: 78, seed: 21, x: cxs[2], y: sy + size / 2, sx: iw * .34, sy: ih * .36, spread: true, lines: INK });
+      build(tq, { t0: .93, t1: 1.46, n: 78, seed: 21, x: cxs[MISS], y: sy + size / 2, sx: iw * .34, sy: ih * .36, spread: true, lines: INK });
       return;
     }
 
@@ -718,24 +726,25 @@
     x.fillStyle = '#2b0bff'; x.fillRect(0, 0, w, h);
     withCtx(x, w, h, function () { circuit(5, '#ffffff', .25); });
     withCtx(x, w, 1080 * .55 * Math.min(1, w / 640), function () {
-      var size = Math.min(h * .36, w * .2), gap = size * 1.25, cx = w / 2, sy = h * .5 - size * .45;
-      var cxs = [cx - gap, cx, cx + gap], idx = cyc >= 1.0 ? 2 : cyc >= .7 ? 1 : cyc >= .4 ? 0 : -1;
+      var size = Math.min(h * .36, w * .16), gap = size * 1.25, cx = w / 2, sy = h * .5 - size * .45;
+      var cxs = [cx - gap * 1.5, cx - gap * .5, cx + gap * .5, cx + gap * 1.5];
+      var idx = cyc >= 1.05 ? 3 : cyc >= .8 ? 2 : cyc >= .55 ? 1 : cyc >= .3 ? 0 : -1;
       chromeShape(2, w * .14, h * .26, size * .5, 2.3);
       chromeShape(0, w * .86, h * .2, size * .26, .35);
       lineShape(0, w * .82, h * .74, size * .3, 'rgba(255,255,255,.7)');
-      for (var k = 0; k < 3; k++) {
+      for (var k = 0; k <= MISS; k++) {
         var xx = cxs[k] - size / 2;
-        if (k < 2) {
+        if (k < MISS) {
           ix.fillStyle = '#b4ff1f'; ix.fillRect(xx, sy, size, size);
           avatarBox(SUBJECTS[k], xx + 6, sy + 6, size - 12);
           ix.strokeStyle = '#121212'; ix.lineWidth = idx > k ? 5 : 3; ix.strokeRect(xx, sy, size, size);
           if (idx > k) { ix.fillStyle = '#121212'; ix.fillRect(xx + size - 34, sy - 10, 34, 20); itext('OK', xx + size - 17, sy + 5, '700 12', '#b4ff1f', null, 'center'); }
-        } else if (idx === 2) {
-          if (cyc < 1.15 && Math.floor(tq * STEP) % 2 === 0) { ix.fillStyle = '#ff2236'; ix.fillRect(xx, sy, size, size); }
+        } else if (idx === MISS) {
+          if (cyc < 1.2 && Math.floor(tq * STEP) % 2 === 0) { ix.fillStyle = '#ff2236'; ix.fillRect(xx, sy, size, size); }
           ix.setLineDash([8, 6]); ix.strokeStyle = '#ff4a6a'; ix.lineWidth = 3; ix.strokeRect(xx, sy, size, size); ix.setLineDash([]);
-          itext('undefined', cxs[k], sy + size / 2 + 5, '700 14', '#ffffff', null, 'center');
+          itext('undefined', cxs[k], sy + size / 2 + 5, '700 12', '#ffffff', null, 'center');
         }
-        itext('crew[' + k + ']', cxs[k], sy + size + 22, '700 12', k === 2 && idx === 2 ? '#ff4a6a' : '#ffffff', null, 'center');
+        itext('crew[' + k + ']', cxs[k], sy + size + 22, '700 12', k === MISS && idx === MISS ? '#ff4a6a' : '#ffffff', null, 'center');
       }
       if (idx >= 0) {
         var px = cxs[idx];
@@ -743,8 +752,8 @@
         ix.beginPath(); ix.moveTo(px - 10, sy - 30); ix.lineTo(px + 10, sy - 30); ix.lineTo(px, sy - 16); ix.closePath(); ix.fill();
         itext('i = ' + idx, px, sy - 38, '700 14', '#ffffff', null, 'center');
       }
-      build(cyc, { t0: 1.1, t1: 3.6, n: 34, seed: 21 + Math.floor(tq / 4.4) * 7, x: cxs[2], y: sy + size / 2, sx: w * .3, sy: h * .34, spread: true, lines: '#ffffff', sc: .9, acc: .7 });
-      itext(idx === 2 ? 'TypeError: crew[2] is undefined' : 'for (let i = 0; i <= crew.length; i++)', 16, h - 16, '700 13', idx === 2 ? '#ff4a6a' : '#b4ff1f');
+      build(cyc, { t0: 1.1, t1: 3.6, n: 34, seed: 21 + Math.floor(tq / 4.4) * 7, x: cxs[MISS], y: sy + size / 2, sx: w * .3, sy: h * .34, spread: true, lines: '#ffffff', sc: .9, acc: .7 });
+      itext(idx === MISS ? 'TypeError: crew[' + MISS + '] is undefined' : 'for (let i = 0; i <= crew.length; i++)', 16, h - 16, '700 13', idx === MISS ? '#ff4a6a' : '#b4ff1f');
     });
   }
 
@@ -811,22 +820,6 @@
     });
   }
 
-
-  function drawIdenticons() {
-    var seeds = [17, 41, 73];
-    document.querySelectorAll('canvas.avatar').forEach(function (cv, n) {
-      var seed = seeds[n % 3], S = 8;
-      cv.width = S; cv.height = S;
-      var x = cv.getContext('2d');
-      x.fillStyle = INK;
-      x.fillRect(0, 0, S, S);
-      for (var j = 0; j < S; j++) for (var i = 0; i < S / 2; i++) {
-        if (hash(seed + i, j * 7) >= .5) continue;
-        x.fillStyle = hash(seed, i * 13 + j) < .2 ? '#ffffff' : ACID;
-        x.fillRect(i, j, 1, 1); x.fillRect(S - 1 - i, j, 1, 1);
-      }
-    });
-  }
 
   document.querySelectorAll('.project[data-href]').forEach(function (card) {
     card.addEventListener('click', function (e) {
@@ -895,7 +888,6 @@
     buildLogo();
     drawBarcodes();
     measureTrack();
-    drawIdenticons();
     window.addEventListener('keydown', skipIntro);
     ic.addEventListener('click', skipIntro);
     start = performance.now();
