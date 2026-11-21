@@ -20,6 +20,24 @@
     });
   });
 
+  document.querySelectorAll('[data-copy]').forEach(function (b) {
+    var label = b.querySelector('span');
+    var old = label.textContent;
+    function flash(t) { label.textContent = t; setTimeout(function () { label.textContent = old; }, 1400); }
+    function legacy() {
+      var t = document.createElement('textarea');
+      t.value = b.dataset.copy; t.style.position = 'fixed'; t.style.opacity = '0';
+      document.body.appendChild(t); t.select();
+      var ok = document.execCommand('copy');
+      t.remove();
+      flash(ok ? 'COPIED' : b.dataset.copy.toUpperCase());
+    }
+    b.addEventListener('click', function () {
+      if (!navigator.clipboard) return legacy();
+      navigator.clipboard.writeText(b.dataset.copy).then(function () { flash('COPIED'); }, legacy);
+    });
+  });
+
   document.querySelectorAll('.bio-barcode').forEach(function (cv) {
     var r = cv.getBoundingClientRect();
     var dpr = window.devicePixelRatio || 1;
