@@ -653,7 +653,7 @@
   function countTick(t) {
     counters.forEach(function (c) {
       var st = bootStart(c.boot), v = DATA[c.key], s;
-      if (v === null || st === null) s = '—';
+      if (v === null || st === null) s = '-';
       else {
         var a = Math.max(st + .2, dataAt === null ? 0 : dataAt);
         s = Math.round(v * easeOut(seg(t, a, a + 1.4))).toLocaleString('en-US');
